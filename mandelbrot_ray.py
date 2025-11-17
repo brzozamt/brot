@@ -5,6 +5,10 @@ import matplotlib.pyplot as plt
 import time
 from math import sqrt
 
+# ray start --head --port=6379 --dashboard-host=0.0.0.0 --num-cpus=6
+# ray start --address='ip:6379' --num-cpus=6
+
+
 # --- Parametry obrazu ---
 WIDTH = 4000
 HEIGHT = 4000
