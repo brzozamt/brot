@@ -20,6 +20,9 @@ os.makedirs(OUT_DIR, exist_ok=True)
 # ---------- KAFELKI ----------
 @ray.remote
 def update_tile(x0, x1, y0, y1, u_curr, u_prev):
+    node_ip = ray.util.get_node_ip_address()
+    print(f"[NODE {node_ip}] Liczę kafel x={x0}-{x1}, y={y0}-{y1}")
+
     new_tile = np.copy(u_curr[y0:y1, x0:x1])
     for y in range(y0, y1):
         for x in range(x0, x1):
@@ -30,7 +33,9 @@ def update_tile(x0, x1, y0, y1, u_curr, u_prev):
                     4*u_curr[y, x]
                 )
                 new_tile[y-y0, x-x0] = 2*u_curr[y, x] - u_prev[y, x] + (C*C)*(DT*DT)/(DX*DX)*laplacian
+
     return (x0, y0, new_tile)
+
 
 # ---------- SKŁADANIE SIATKI ----------
 def assemble_grid(grid, tiles):
